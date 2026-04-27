@@ -1,0 +1,150 @@
+REST API - JSON
+GET/USERS - list the user with ID 1
+GET/USERS - get user with id 1
+GET/USERS - get user with id 
+
+POST /USERS - create new useer
+PATCH/USER/1 - Edit user with ID 1
+
+DELETE / users / 1 - delete user with id 1
+//mockaroo.com = it is fake data generating website for testing purpose
+
+Mongoose
+schema - model
+using model we  do curd operation
+/*
+const express=require("express")
+const app=express();
+const PORT=3000;
+//const users=require("./MOCK_DATA.json");
+const fs=require('fs')
+const mongoose=require('mongoose');
+//mongoose package used to connect mongodb 
+mongoose.connect('mongodb://127.0.0.1:27017/youtube-app-1')
+.then(()=>console.log("mongodb connected"))
+.catch((err)=>console.log("Mongo Error",err));
+
+const userSchema=new mongoose.Schema({
+    first_name:{
+        type:String,
+        required:true,
+    },
+    last_name:{
+        type:String,
+    },
+    email:{
+        type:String,
+        required:true,
+        unique:true
+    },
+    job_title:{
+        type:String,
+       
+    },
+    
+},{ timestamps:true});
+
+const User=mongoose.model("user",userSchema);
+
+//middleware executes req and response
+//middleware has access of req and response obj and next middleware func
+//middleware changes response and request objects
+
+app.use((req,res,next)=> {
+    console.log("Hello from middleware 1");
+    //return res.json({msg:"Hello from middleware 1"})//it ends response here
+     //it calls next function
+     req.myusername="prathamesh";     
+     next();
+    
+})
+app.use((req,res,next)=> {
+    console.log("Hello from middleware2 ",req.myusername);
+    
+     next();
+    
+})
+app.use(express.urlencoded({extended:false}));
+app.get("/api/users",async(req,res)=>{
+    res.setHeader("X-Myname","Prathamesh")//custom header
+    //Always add X to custom header its good practice
+    const users = await User.find({});
+    return res.json(users);
+})
+app.get("/users",async(req,res)=>{
+    const allDbusers=await User.find({});//find all user in db
+    const html=`
+      <ul>
+       ${allDbusers.map(user => `<li>${user.first_name}-${user.email}</li>`)}
+      </ul>
+     `;
+     res.send(html)
+    
+});
+//dynamic path parameter syntax :id id may be 1 2
+app.get("/api/users/:id", async(req,res)=>{
+//    const id=Number(req.params.id);
+//    const user=users.find((user)=>user.id===id);
+const user=await User.findById(req.params.id);
+   if(!user) return res.status(404).json({error:"user not found"});
+   return res.json(user)
+});
+// combining the methods on same route
+
+// app.route('./api/users/:id')
+//   .get("/api/users/:id",(req,res)=>{
+//     const id=Number(req.params.id);
+//     const user=users.find((user)=>user.id===id);
+//     return res.json(user)
+//  })
+//  .patch('./api/users/:id', (req,res) => {
+//     //update user with user id
+//     return res.json({status:"pending"});
+// })
+// .delete('./api/users/:id', (req,res) => {
+//     //delete user with user id
+//     return res.json({status:"pending"});
+// })
+
+app.post('/api/users', async(req,res) => {
+    //create new user
+    const body=req.body; //req.body mai front end se aya hu  data store hoga
+    if(!body||!body.first_name||!body.last_name||!body.gender||!body.job_title){
+        return res.status(400).json({msg:"All fields required"})
+    }
+    // users.push({...body,id: users.length+1});
+   
+    // console.log(body);
+    // fs.writeFile("./MOCK_DATA.json",JSON.stringify(users),(err,data)=>{
+    //     return res.status(201).json({status:"Success", id:users.length});
+    // }) this is for file 
+     
+    const result=await User.create({
+        first_name:body.first_name,
+        last_name:body.last_name,
+        gender:body.gender,
+        job_title:body.job_title,
+        email:body.email,
+    });
+    console.log(result);
+    
+    return res.status(201).json({status:"Success"});
+});
+
+app.patch('/api/users/:id', async(req,res) => {
+    //update user with user id
+    await User.findByIdAndUpdate(req.params.id,{last_name:'changed'});
+    return res.json({status:"Success"});
+});
+
+app.delete('/api/users/:id',async (req,res) => {
+    //delete user with user id
+    await User.findByIdAndDelete(req.params.id)
+    return res.json({status:"Deleted"});
+});
+
+app.listen(PORT,() =>console.log(`server started at ${PORT}`)
+ )
+//install nodeman package to automatic server restart when change in code
+
+*/
