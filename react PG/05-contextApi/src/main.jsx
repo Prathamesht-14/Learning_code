@@ -1,0 +1,13 @@
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import { ConterProvider } from './Context/Counter.jsx'
+import App from './App.jsx'
+
+createRoot(document.getElementById('root')).render(
+  <StrictMode>
+    <ConterProvider>
+      <App />
+    </ConterProvider>
+    
+  </StrictMode>,
+)
