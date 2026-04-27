@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>events</title>
+</head>
+<body style="background-color: #414141;color:aliceblue;">
+    <h2>Amazing Images</h2>
+    <div>
+        <ul id="images">
+            <li><img  width="200px"  height="200px" id="img1" src="img-1.jpg" alt=""></li>
+            <li><img  width="200px"  height="200px" id="img2" src="img-2.jpg" alt=""></li>
+            <li><img  width="200px"  height="200px" id="img3" src="img-3.jpg" alt=""></li>
+            <li><img  width="200px"  height="200px" id="img4" src="img-4.jpg" alt=""></li>
+            <li><img  width="200px"  height="200px" id="img5" src="img-5.jpg" alt=""></li>
+            <li><img  width="200px"  height="200px" id="img6" src="img-6.jpg" alt=""></li>
+            <li><a style="color: aliceblue;" href="https://google.com" id="google">Google</a></li>
+        </ul>
+    </div>
+    <script>
+        // document.getElementById('img4').onclick=function(){
+        //     alert("img1 clicked")
+        // }
+        //best approach below
+        document.getElementById('images').addEventListener('click',function(e){
+            alert("inside  ul clicked")
+        },false)
+        //type timestamp,default prevented ,target ,toElement
+        //srcElement,currentarget,clientX,clientY,screenX,screenY
+        //altkey,ctrlkey,keycode
+        //If the user clicks on one of the images, e.target would refer to the <img>
+        //event propogation false=bubbling up inside to outside
+        //true capturing outer to inner
+        document.getElementById('img2').addEventListener('click',function(e){
+            console.log();
+            ("img2 clicked")
+           // e.stopPropagation();
+        },false)
+        document.getElementById('google').addEventListener('click',function(e){
+            e.preventDefault();
+            console.log("google clicked");
+            
+        },false)
+        document.querySelector('#images').addEventListener('click',function(e){
+            console.log(e.target.parentNode)
+            if(e.target.tagName=='IMG'){
+                let removeit=e.target.parentNode
+                removeit.remove()   
+            }
+            
+        //    removeit.parentNode.removeChild(removeit)
+        })
+    </script>
+</body>
+</html>
